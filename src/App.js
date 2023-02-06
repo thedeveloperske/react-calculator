@@ -1,25 +1,107 @@
-import logo from './logo.svg';
+import { Component } from 'react';
 import './App.css';
+import Button from './components/Button';
+import ClearButton  from './components/ClearButton';
+import Input from './components/Input';
+import * as math from 'mathjs';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      input: ""
+    }
+  }
+
+  addToInput = val => {
+    this.setState ({input: this.state.input + val})
+  }
+
+  handleEqual = () => {
+    this.setState(
+      {
+        input : math.evaluate(this.state.input)
+      }
+    )
+  }
+
+  handleSqrt = () => {
+    this.setState(
+      {
+        input : math.sqrt(this.state.input)
+      }
+    )
+  }
+
+  handleLog = () => {
+    this.setState(
+      {
+        input : math.log(this.state.input)
+      }
+    )
+  }
+
+  handleTan = () => {
+    this.setState(
+      {
+        input : math.tan(this.state.input)
+      }
+    )
+  }
+
+  handleSin = () => {
+    this.setState(
+      {
+        input : math.sin(this.state.input)
+      }
+    )
+  }
+
+
+  render() {
+
+    return (
+      <div className="App">
+        <div className='calc-wrapper'>
+          <Input input = {this.state.input}></Input>
+          <div className='row'>
+            <Button handleClick = {this.addToInput}>7</Button>
+            <Button handleClick = {this.addToInput}>8</Button>
+            <Button handleClick = {this.addToInput}>9</Button>
+            <Button handleClick = {this.addToInput}>/</Button>
+          </div>
+          <div className='row'>
+            <Button handleClick = {this.addToInput}>6</Button>
+            <Button handleClick = {this.addToInput}>5</Button>
+            <Button handleClick = {this.addToInput}>4</Button>
+            <Button handleClick = {this.addToInput}>X</Button>
+          </div>    
+          <div className='row'>
+            <Button handleClick = {this.addToInput}>3</Button>
+            <Button handleClick = {this.addToInput}>2</Button>
+            <Button handleClick = {this.addToInput}>1</Button>
+            <Button handleClick = {this.addToInput}>+</Button>
+          </div>   
+          <div className='row'>
+            <Button handleClick = {this.addToInput}>.</Button>
+            <Button handleClick = {this.addToInput}>0</Button>
+            <Button handleClick = {() => this.handleEqual()}>=</Button>
+            <Button handleClick = {this.addToInput}>-</Button>
+          </div> 
+          <div className='row'>
+            <Button handleClick = {() => this.handleSqrt()}>√</Button>
+            <Button handleClick = {() => this.handleLog()}>log</Button>
+            <Button handleClick = {() => this.handleTan()}>tan</Button>
+            <Button handleClick = {() => this.handleSin()}>sin</Button>
+          </div> 
+          <div className='row'>
+            <ClearButton handleClear={() => this.setState({input: ""})}>Clear</ClearButton>
+          </div>
+        </div>
+      </div>
+    );
+  } 
 }
 
 export default App;
